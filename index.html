@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mi Estudio IA - Plataforma de producción musical privada y soberana basada en Music DNA">
+    <title>Mi Estudio IA — Music DNA Studio</title>
+    
+    <!-- Estilos CSS3 Profesionales -->
+    <style>
+        :root {
+            --bg-dark: #0a0c10;
+            --bg-card: #121621;
+            --bg-card-hover: #1a2030;
+            --bg-input: #0b0d13;
+            --accent: #7c3aed;
+            --accent-hover: #6d28d9;
+            --accent-light: #a78bfa;
+            --accent-glow: rgba(124, 58, 237, 0.35);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: #23293e;
+            --border-highlight: #3b4466;
+            --success: #10b981;
+            --danger: #ef4444;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+        }
+
+        /* Encabezado de la App */
+        header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .user-badge {
+            background: rgba(124, 58, 237, 0.12);
+            border: 1px solid var(--accent);
+            padding: 0.4rem 0.9rem;
+            border-radius: 9999px;
+            font-size: 0.825rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        /* Layout Principal */
+        main {
+            flex: 1;
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) {
+            main {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+        }
+
+        /* Paneles y Tarjetas */
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+        }
+
+        /* Pestañas de Modos de Entrada */
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .modes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mode-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mode-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-highlight);
+        }
+
+        .mode-card.active {
+            background: rgba(124, 58, 237, 0.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .mode-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .mode-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Formularios Dinámicos */
+        .input-form {
+            display: none;
+            background: var(--bg-input);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .input-form.active {
+            display: block;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 0.85rem;
+            border-radius: var(--radius-sm);
+            resize: none;
+            outline: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        textarea:focus, input[type="text"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Grabadora de Voz */
+        .recorder-box {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .record-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .record-btn.recording {
+            animation: pulse 1.5s infinite;
+            background: #dc2626;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.08); box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        canvas#waveform {
+            width: 100%;
+            height: 60px;
+            background: var(--bg-dark);
+            border-radius: var(--radius-sm);
+            margin-top: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Deslizadores de ADN Musical */
+        .dna-control {
+            margin-bottom: 1.25rem;
+        }
+
+        .dna-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        /* Botón Principal CTA */
+        .btn-generate {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn-generate:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .btn-generate:active {
+            transform: translateY(1px);
+        }
+
+        /* Reproductor y Mezclador Multipista */
+        .player-box {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .player-box.active {
+            display: block;
+        }
+
+        .controls-bar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-audio {
+            border: none;
+            padding: 0.65rem 1.25rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: white;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-play {
+            background: var(--accent);
+        }
+
+        .btn-play:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-stop {
+            background: var(--danger);
+        }
+
+        .btn-stop:hover {
+            background: #dc2626;
+        }
+
+        .stems-grid {
+            display: grid;
+            gap: 0.8rem;
+            margin: 1.25rem 0;
+        }
+
+        .stem-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-input);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .stem-name {
+            width: 90px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .btn-mute {
+            background: var(--border);
+            border: none;
+            color: var(--text-muted);
+            padding: 0.4rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-mute.active {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Bloque de Derechos y Trazabilidad */
+        .rights-badge {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 0.85rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            margin-top: 1.25rem;
+            line-height: 1.4;
+        }
+
+        /* Métricas del Catálogo */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .stat-card {
+            background: var(--bg-input);
+            padding: 0.9rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-light);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="logo-area">
+            <span class="logo-icon">🎵</span>
+            <h1 class="logo-title">MI ESTUDIO IA</h1>
+        </div>
+        <div class="user-badge">
+            <span class="status-dot"></span> ARTISTA AUTORIZADO
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main>
+        <!-- Panel Izquierdo: Creación y Mezcla -->
+        <section>
+            <div class="panel">
+                <h2 class="panel-title">¿Qué quieres crear hoy?</h2>
+                
+                <!-- Selector de Modo de Entrada -->
+                <div class="modes-grid">
+                    <div class="mode-card active" onclick="setMode('text', event)">
+                        <div class="mode-header">✍️ TEXTO</div>
+                        <div class="mode-desc">Describe un concepto, letras o estilo</div>
+                    </div>
+                    <div class="mode-card" onclick="setMode('hum', event)">
+                        <div class="mode-header">🎙️ TARAREAR</div>
+                        <div class="mode-desc">Graba una idea melódica con tu voz</div>
+                    </div>
+                    <div class="mode-card" onclick="setMode('demo', event)">
+                        <div class="mode-header">🎸 MI DEMO</div>
+                        <div class="mode-desc">Sube una grabación de guitarra/voz</div>
+                    </div>
+                    <div class="mode-card" onclick="setMode('audio', event)">
+                        <div class="mode-header">🎧 REMEZCLA</div>
+                        <div class="mode-desc">Crea una variación de tu catálogo</div>
+                    </div>
+                </div>
+
+                <!-- Formulario 1: Texto -->
+                <div id="form-text" class="input-form active">
+                    <label style="font-size:0.85rem; color: var(--text-muted); display:block; margin-bottom:0.5rem;">Instrucción o concepto musical:</label>
+                    <textarea id="text-prompt" rows="3" placeholder="Ej: Una producción íntima y nocturna con guitarra acústica, voz cercana y ambiente melancólico..."></textarea>
+                </div>
+
+                <!-- Formulario 2: Tararear -->
+                <div id="form-hum" class="input-form">
+                    <div class="recorder-box">
+                        <button id="record-btn" class="record-btn" onclick="toggleRecord()">🎙️</button>
+                        <div id="record-status" style="font-size:0.85rem; color:var(--text-muted);">Pulsa el botón para grabar tu idea</div>
+                        <canvas id="waveform"></canvas>
+                    </div>
+                </div>
+
+                <!-- Formulario 3: Demo -->
+                <div id="form-demo" class="input-form">
+                    <div style="border:2px dashed var(--border-highlight); padding:2rem; text-align:center; border-radius:var(--radius-sm); cursor:pointer;" onclick="alert('Simulación: Archivo de demo cargado correctamente.')">
+                        📁 Arrastra tu demo en MP3/WAV o haz clic para examinar
+                    </div>
+                </div>
+
+                <!-- Formulario 4: Audio Catálogo -->
+                <div id="form-audio" class="input-form">
+                    <label style="font-size:0.85rem; color: var(--text-muted); display:block; margin-bottom:0.5rem;">Canción base seleccionada:</label>
+                    <input type="text" value="Cancion_04_Album2025.wav (Solo lectura)" readonly>
+                </div>
+
+                <!-- Ajuste de ADN Musical -->
+                <div style="margin-top: 1.5rem;">
+                    <h3 class="panel-title">🧬 Nivel de ADN Musical Aplicado</h3>
+                    <div class="dna-control">
+                        <div class="dna-label">
+                            <span>Influencia de tu Catálogo</span>
+                            <span id="val-dna">85%</span>
+                        </div>
+                        <input type="range" id="slider-dna" min="0" max="100" value="85" oninput="document.getElementById('val-dna').innerText = this.value + '%'">
+                    </div>
+                </div>
+
+                <!-- Botón Generar -->
+                <button class="btn-generate" onclick="generateMusic()">🚀 GENERAR CON MI ADN MUSICAL</button>
+            </div>
+
+            <!-- Panel Reproductor / Mezclador Resultante -->
+            <div id="player-box" class="player-box">
+                <h2 class="panel-title">🎧 CANCIÓN GENERADA</h2>
+                
+                <div class="controls-bar">
+                    <button id="play-btn" class="btn-audio btn-play" onclick="togglePlay()">▶ REPRODUCIR</button>
+                    <button class="btn-audio btn-stop" onclick="stopAudioEngine()">⏹ DETENER</button>
+                    <span style="font-size:0.85rem; color:var(--accent-light); margin-left:auto;">Tonalidad: La Menor | 100 BPM</span>
+                </div>
+
+                <!-- Mezclador de Stems -->
+                <div class="stems-grid">
+                    <div class="stem-row">
+                        <span class="stem-name">🎤 Voz</span>
+                        <input type="range" value="90" id="vol-vox" oninput="setVolume('vox', this.value)">
+                        <button class="btn-mute" onclick="toggleMute('vox', this)">MUTE</button>
+                    </div>
+                    <div class="stem-row">
+                        <span class="stem-name">🥁 Batería</span>
+                        <input type="range" value="80" id="vol-drums" oninput="setVolume('drums', this.value)">
+                        <button class="btn-mute" onclick="toggleMute('drums', this)">MUTE</button>
+                    </div>
+                    <div class="stem-row">
+                        <span class="stem-name">🎸 Bajo</span>
+                        <input type="range" value="85" id="vol-bass" oninput="setVolume('bass', this.value)">
+                        <button class="btn-mute" onclick="toggleMute('bass', this)">MUTE</button>
+                    </div>
+                    <div class="stem-row">
+                        <span class="stem-name">🎹 Melodía</span>
+                        <input type="range" value="100" id="vol-keys" oninput="setVolume('keys', this.value)">
+                        <button class="btn-mute" onclick="toggleMute('keys', this)">MUTE</button>
+                    </div>
+                </div>
+
+                <div class="rights-badge">
+                    🔒 <strong>Cadena de Derechos Verificada:</strong> Generación protegida. Modelo privado entrenado exclusivamente con tu catálogo autorizado. Fingerprint ID: <code>#DNA-8842-2026</code>.
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel Derecho: Catálogo y ADN Musical -->
+        <section>
+            <div class="panel">
+                <h2 class="panel-title">🧠 MI UNIVERSO MUSICAL</h2>
+                
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-num">47</div>
+                        <div class="stat-label">Canciones</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">186</div>
+                        <div class="stat-label">Stems</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">12</div>
+                        <div class="stat-label">Voces HD</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">34</div>
+                        <div class="stat-label">MIDIs</div>
+                    </div>
+                </div>
+
+                <hr style="border:none; border-top:1px solid var(--border); margin: 1.25rem 0;">
+
+                <div style="font-size:0.9rem; font-weight:600; margin-bottom:0.8rem;">Perfil de Identidad Activo</div>
+                
+                <div class="dna-control">
+                    <div class="dna-label">
+                        <span>Melodía & Intervalos</span>
+                        <span>91%</span>
+                    </div>
+                    <input type="range" value="91" disabled>
+                </div>
+                <div class="dna-control">
+                    <div class="dna-label">
+                        <span>Armonía & Acordes</span>
+                        <span>84%</span>
+                    </div>
+                    <input type="range" value="84" disabled>
+                </div>
+                <div class="dna-control">
+                    <div class="dna-label">
+                        <span>Timbre de Voz</span>
+                        <span>97%</span>
+                    </div>
+                    <input type="range" value="97" disabled>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lógica JavaScript (Web Audio API & UI) -->
+    <script>
+        // Gestión de Pestañas de Entrada
+        function setMode(mode, evt) {
+            document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.input-form').forEach(f => f.classList.remove('active'));
+            
+            evt.currentTarget.classList.add('active');
+            document.getElementById('form-' + mode).classList.add('active');
+        }
+
+        // Grabadora de Audio Interactiva
+        let isRecording = false;
+
+        function toggleRecord() {
+            const btn = document.getElementById('record-btn');
+            const status = document.getElementById('record-status');
+            
+            if (!isRecording) {
+                isRecording = true;
+                btn.classList.add('recording');
+                status.innerText = "Grabando... Canta o tararea tu idea.";
+            } else {
+                isRecording = false;
+                btn.classList.remove('recording');
+                status.innerText = "✅ Idea grabada: Melodía detectada en La Menor (100 BPM).";
+            }
+        }
+
+        // Motor Sintetizador y Reproductor
+        let synthCtx = null;
+        let isPlaying = false;
+        let synthInterval = null;
+
+        let volumes = { vox: 0.9, drums: 0.8, bass: 0.85, keys: 1.0 };
+        let mutes = { vox: false, drums: false, bass: false, keys: false };
+
+        function generateMusic() {
+            document.getElementById('player-box').classList.add('active');
+            document.getElementById('player-box').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function togglePlay() {
+            if (!isPlaying) {
+                startAudioEngine();
+            } else {
+                pauseAudioEngine();
+            }
+        }
+
+        function startAudioEngine() {
+            if (!synthCtx) synthCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (synthCtx.state === 'suspended') synthCtx.resume();
+
+            isPlaying = true;
+            document.getElementById('play-btn').innerText = "⏸ PAUSAR";
+
+            const notes = [220, 261.63, 293.66, 329.63, 392.00];
+            let step = 0;
+
+            if (synthInterval) clearInterval(synthInterval);
+
+            synthInterval = setInterval(() => {
+                if (!isPlaying || !synthCtx) return;
+
+                let now = synthCtx.currentTime;
+
+                // Melodía
+                if (!mutes.keys) {
+                    let osc = synthCtx.createOscillator();
+                    let gain = synthCtx.createGain();
+                    osc.type = 'sine';
+                    let freq = notes[Math.floor(Math.random() * notes.length)] * 2;
+                    osc.frequency.setValueAtTime(freq, now);
+                    
+                    gain.gain.setValueAtTime(0.15 * volumes.keys, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                    
+                    osc.connect(gain);
+                    gain.connect(synthCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                }
+
+                // Bajo
+                if (!mutes.bass && step % 2 === 0) {
+                    let osc = synthCtx.createOscillator();
+                    let gain = synthCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(110, now);
+                    
+                    gain.gain.setValueAtTime(0.25 * volumes.bass, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                    
+                    osc.connect(gain);
+                    gain.connect(synthCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                }
+
+                // Batería
+                if (!mutes.drums && step % 4 === 0) {
+                    let osc = synthCtx.createOscillator();
+                    let gain = synthCtx.createGain();
+                    osc.frequency.setValueAtTime(100, now);
+                    osc.frequency.exponentialRampToValueAtTime(0.01, now + 0.15);
+                    
+                    gain.gain.setValueAtTime(0.3 * volumes.drums, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                    
+                    osc.connect(gain);
+                    gain.connect(synthCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                }
+
+                step++;
+            }, 300);
+        }
+
+        function pauseAudioEngine() {
+            isPlaying = false;
+            if (synthInterval) clearInterval(synthInterval);
+            document.getElementById('play-btn').innerText = "▶ REPRODUCIR";
+        }
+
+        function stopAudioEngine() {
+            pauseAudioEngine();
+            if (synthCtx) {
+                synthCtx.suspend();
+            }
+        }
+
+        function setVolume(stem, val) {
+            volumes[stem] = val / 100;
+        }
+
+        function toggleMute(stem, btn) {
+            mutes[stem] = !mutes[stem];
+            if (mutes[stem]) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
