@@ -387,6 +387,16 @@
             background: #dc2626;
         }
 
+        .btn-download {
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-download:hover {
+            background: #059669;
+        }
+
         .stems-grid {
             display: grid;
             gap: 0.8rem;
@@ -560,6 +570,10 @@
                 <div class="controls-bar">
                     <button id="play-btn" class="btn-audio btn-play" onclick="togglePlay()">▶ REPRODUCIR</button>
                     <button class="btn-audio btn-stop" onclick="stopAudioEngine()">⏹ DETENER</button>
+                    
+                    <!-- Botón de descarga de archivo WAV -->
+                    <a id="download-wav-btn" class="btn-audio btn-download" download="cancion_mi_estudio_ia.wav">⬇️ DESCARGAR WAV</a>
+                    
                     <span style="font-size:0.85rem; color:var(--accent-light); margin-left:auto;">Tonalidad: La Menor | 100 BPM</span>
                 </div>
 
@@ -648,7 +662,6 @@
 
     <!-- Lógica JavaScript (Conexión Servidor IA + UI) -->
     <script>
-        // Cargar URL almacenada o usar valor por defecto
         let BACKEND_URL = localStorage.getItem("colab_url") || "https://dna-working-overnight-firewire.trycloudflare.com";
 
         function cambiarURL() {
@@ -713,6 +726,10 @@
                 const blob = await response.blob();
                 audioUrlGenerado = URL.createObjectURL(blob);
                 
+                // Configurar el botón de descarga con la URL de audio
+                const downloadBtn = document.getElementById('download-wav-btn');
+                downloadBtn.href = audioUrlGenerado;
+
                 // Mostrar panel del reproductor
                 document.getElementById('player-box').classList.add('active');
                 document.getElementById('player-box').scrollIntoView({ behavior: 'smooth' });
