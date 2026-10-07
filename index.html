@@ -435,7 +435,7 @@
 
                 <div id="form-text" class="input-form active">
                     <label style="font-size:0.85rem; color: var(--text-muted); display:block; margin-bottom:0.5rem;">Instrucción o concepto musical:</label>
-                    <textarea id="text-prompt" rows="3" placeholder="Ej: A warm acoustic guitar intro leading into a slow piano melody..."></textarea>
+                    <textarea id="text-prompt" rows="3" placeholder="Ej: A simple acoustic guitar intro leading into a slow piano melody..."></textarea>
                 </div>
 
                 <button class="btn-generate" onclick="generateMusic()">🚀 GENERAR CON MI ADN MUSICAL</button>
@@ -443,7 +443,7 @@
 
             <!-- Panel Reproductor con Display de Frecuencias y Descargas -->
             <div id="player-box" class="player-box">
-                <h2 class="panel-title">🎧 CANCIÓN GENERADA EN TIEMPO REAL</h2>
+                <h2 class="panel-title">🎧 CANCIÓN GENERADA (2 MINUTOS COMPLETOS)</h2>
                 
                 <!-- Display del Ecualizador de Frecuencias Canvas -->
                 <div class="visualizer-container">
@@ -457,7 +457,7 @@
                 <div class="controls-bar">
                     <button id="play-btn" class="btn-audio btn-play" onclick="togglePlay()">▶ REPRODUCIR</button>
                     <button class="btn-audio btn-stop" onclick="stopAudioEngine()">⏹ DETENER</button>
-                    <span style="font-size:0.85rem; color:var(--accent-light); margin-left:auto;">Duración: 30s | 44.1 kHz</span>
+                    <span style="font-size:0.85rem; color:var(--accent-light); margin-left:auto;">Duración: 120s (2 min) | 44.1 kHz</span>
                 </div>
 
                 <!-- Mezclador de Pistas -->
@@ -478,11 +478,11 @@
                 <div class="download-panel">
                     <div class="download-title">📥 DESCARGA PROFESIONAL DE ARCHIVOS</div>
                     <div class="download-grid">
-                        <a id="download-wav-master" class="btn-download-fmt" download="Master_Audio_HD.wav">
+                        <a id="download-wav-master" class="btn-download-fmt" download="Master_Audio_2min_HD.wav">
                             <span>💾 WAV 24-bit HD</span>
-                            <span class="fmt-desc">Sin compresión / Estudio</span>
+                            <span class="fmt-desc">Sin compresión / 2 Minutos</span>
                         </a>
-                        <a id="download-mp3-std" class="btn-download-fmt" download="Pista_320kbps.mp3">
+                        <a id="download-mp3-std" class="btn-download-fmt" download="Pista_2min_320kbps.mp3">
                             <span>📲 MP3 320 kbps</span>
                             <span class="fmt-desc">Para streaming y móvil</span>
                         </a>
@@ -499,7 +499,7 @@
             <div class="panel">
                 <h2 class="panel-title">🧠 PANEL DE CONTROL</h2>
                 <p style="font-size:0.85rem; color:var(--text-muted);">
-                    Motor de Inteligencia Artificial conectado. Generación soberana activa.
+                    Motor de Inteligencia Artificial conectado. Generación soberana activa (Duración: 2 min).
                 </p>
             </div>
         </section>
@@ -537,11 +537,11 @@
                 if (!BACKEND_URL) return;
             }
 
-            const promptTexto = document.getElementById('text-prompt').value || "A warm acoustic guitar melody with soft piano pads";
+            const promptTexto = document.getElementById('text-prompt').value || "A simple acoustic guitar intro leading into a slow piano melody";
             const btnGenerate = document.querySelector('.btn-generate');
             
             btnGenerate.disabled = true;
-            btnGenerate.innerText = "⏳ GENERANDO AUDIO Y PROCESANDO FRECUENCIAS...";
+            btnGenerate.innerText = "⏳ GENERANDO 2 MINUTOS (120s) DE MÚSICA EN LA GPU...";
             
             try {
                 const response = await fetch(`${BACKEND_URL}/generar`, {
@@ -570,7 +570,7 @@
                 // Inicializar motor Web Audio para el Display de Frecuencias
                 initAudioContext();
 
-                btnGenerate.innerText = "🚀 GENERAR OTRA CANCIÓN CON MI ADN";
+                btnGenerate.innerText = "🚀 GENERAR OTRA CANCIÓN (2 MIN)";
                 btnGenerate.disabled = false;
 
                 togglePlay();
@@ -650,7 +650,7 @@
             if (audioPlayer.paused) {
                 audioPlayer.play();
                 playBtn.innerText = "⏸ PAUSAR";
-                tagStatus.innerText = "REPRODUCIENDO (ANALIZANDO RTA)";
+                tagStatus.innerText = "REPRODUCIENDO (2 MINUTOS)";
                 tagStatus.style.color = "#10b981";
                 drawVisualizer();
             } else {
