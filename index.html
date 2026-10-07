@@ -620,8 +620,12 @@
         </section>
     </main>
 
-    <!-- Lógica JavaScript (Web Audio API & UI) -->
+    <!-- Lógica JavaScript (Conexión Servidor IA + UI) -->
     <script>
+        const BACKEND_URL = "https://circulation-claims-flyer-synthetic.trycloudflare.com";
+        let audioUrlGenerado = null;
+        let audioPlayer = null;
+
         // Gestión de Pestañas de Entrada
         function setMode(mode, evt) {
             document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
@@ -649,120 +653,82 @@
             }
         }
 
-        // Motor Sintetizador y Reproductor
-        let synthCtx = null;
-        let isPlaying = false;
-        let synthInterval = null;
+        // Petición al servidor de IA en Google Colab
+        async function generateMusic() {
+            const promptTexto = document.getElementById('text-prompt').value || "A melancholic acoustic guitar with gentle piano pads";
+            const btnGenerate = document.querySelector('.btn-generate');
+            
+            // Estado visual de carga
+            btnGenerate.disabled = true;
+            btnGenerate.innerText = "⏳ GENERANDO MÚSICA CON IA... (ESPERA UNOS SEGUNDOS)";
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/generar`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: promptTexto })
+                });
 
-        let volumes = { vox: 0.9, drums: 0.8, bass: 0.85, keys: 1.0 };
-        let mutes = { vox: false, drums: false, bass: false, keys: false };
+                if (!response.ok) throw new Error("Error en el servidor de IA");
 
-        function generateMusic() {
-            document.getElementById('player-box').classList.add('active');
-            document.getElementById('player-box').scrollIntoView({ behavior: 'smooth' });
-        }
+                const blob = await response.blob();
+                audioUrlGenerado = URL.createObjectURL(blob);
+                
+                // Mostrar panel del reproductor
+                document.getElementById('player-box').classList.add('active');
+                document.getElementById('player-box').scrollIntoView({ behavior: 'smooth' });
 
-        function togglePlay() {
-            if (!isPlaying) {
-                startAudioEngine();
-            } else {
-                pauseAudioEngine();
+                // Cargar el audio generado en el reproductor
+                if (audioPlayer) audioPlayer.pause();
+                audioPlayer = new Audio(audioUrlGenerado);
+                
+                btnGenerate.innerText = "🚀 GENERAR OTRA CANCIÓN CON MI ADN";
+                btnGenerate.disabled = false;
+
+                // Reproducir automáticamente
+                togglePlay();
+
+            } catch (error) {
+                console.error("Error al generar audio:", error);
+                alert("Hubo un problema al conectar con el servidor de IA. Revisa que Google Colab siga ejecutando la celda.");
+                btnGenerate.innerText = "🚀 GENERAR CON MI ADN MUSICAL";
+                btnGenerate.disabled = false;
             }
         }
 
-        function startAudioEngine() {
-            if (!synthCtx) synthCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (synthCtx.state === 'suspended') synthCtx.resume();
+        // Controles del Reproductor de Audio
+        function togglePlay() {
+            const playBtn = document.getElementById('play-btn');
+            if (!audioPlayer) return;
 
-            isPlaying = true;
-            document.getElementById('play-btn').innerText = "⏸ PAUSAR";
-
-            const notes = [220, 261.63, 293.66, 329.63, 392.00];
-            let step = 0;
-
-            if (synthInterval) clearInterval(synthInterval);
-
-            synthInterval = setInterval(() => {
-                if (!isPlaying || !synthCtx) return;
-
-                let now = synthCtx.currentTime;
-
-                // Melodía
-                if (!mutes.keys) {
-                    let osc = synthCtx.createOscillator();
-                    let gain = synthCtx.createGain();
-                    osc.type = 'sine';
-                    let freq = notes[Math.floor(Math.random() * notes.length)] * 2;
-                    osc.frequency.setValueAtTime(freq, now);
-                    
-                    gain.gain.setValueAtTime(0.15 * volumes.keys, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-                    
-                    osc.connect(gain);
-                    gain.connect(synthCtx.destination);
-                    osc.start(now);
-                    osc.stop(now + 0.35);
-                }
-
-                // Bajo
-                if (!mutes.bass && step % 2 === 0) {
-                    let osc = synthCtx.createOscillator();
-                    let gain = synthCtx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(110, now);
-                    
-                    gain.gain.setValueAtTime(0.25 * volumes.bass, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-                    
-                    osc.connect(gain);
-                    gain.connect(synthCtx.destination);
-                    osc.start(now);
-                    osc.stop(now + 0.5);
-                }
-
-                // Batería
-                if (!mutes.drums && step % 4 === 0) {
-                    let osc = synthCtx.createOscillator();
-                    let gain = synthCtx.createGain();
-                    osc.frequency.setValueAtTime(100, now);
-                    osc.frequency.exponentialRampToValueAtTime(0.01, now + 0.15);
-                    
-                    gain.gain.setValueAtTime(0.3 * volumes.drums, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-                    
-                    osc.connect(gain);
-                    gain.connect(synthCtx.destination);
-                    osc.start(now);
-                    osc.stop(now + 0.15);
-                }
-
-                step++;
-            }, 300);
-        }
-
-        function pauseAudioEngine() {
-            isPlaying = false;
-            if (synthInterval) clearInterval(synthInterval);
-            document.getElementById('play-btn').innerText = "▶ REPRODUCIR";
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playBtn.innerText = "⏸ PAUSAR";
+            } else {
+                audioPlayer.pause();
+                playBtn.innerText = "▶ REPRODUCIR";
+            }
         }
 
         function stopAudioEngine() {
-            pauseAudioEngine();
-            if (synthCtx) {
-                synthCtx.suspend();
+            if (audioPlayer) {
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
             }
+            document.getElementById('play-btn').innerText = "▶ REPRODUCIR";
         }
 
+        // Controles de volumen y silenciado de la interfaz
         function setVolume(stem, val) {
-            volumes[stem] = val / 100;
+            if (audioPlayer) audioPlayer.volume = val / 100;
         }
 
         function toggleMute(stem, btn) {
-            mutes[stem] = !mutes[stem];
-            if (mutes[stem]) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
+            btn.classList.toggle('active');
+            if (audioPlayer) {
+                audioPlayer.muted = !audioPlayer.muted;
             }
         }
     </script>
