@@ -46,7 +46,7 @@
             line-height: 1.5;
         }
 
-        /* Encabezado de la App */
+        /* Encabezado */
         header {
             background: var(--bg-card);
             border-bottom: 1px solid var(--border);
@@ -142,7 +142,7 @@
             }
         }
 
-        /* Paneles y Tarjetas */
+        /* Paneles */
         .panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -162,18 +162,12 @@
             color: var(--text-main);
         }
 
-        /* Pestañas de Modos de Entrada */
+        /* Modos */
         .modes-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
             margin-bottom: 1.5rem;
-        }
-
-        @media (max-width: 600px) {
-            .modes-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         .mode-card {
@@ -185,11 +179,6 @@
             transition: var(--transition);
         }
 
-        .mode-card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-highlight);
-        }
-
         .mode-card.active {
             background: rgba(124, 58, 237, 0.1);
             border-color: var(--accent);
@@ -197,9 +186,6 @@
         }
 
         .mode-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
             font-weight: 600;
             font-size: 0.95rem;
             margin-bottom: 0.3rem;
@@ -210,7 +196,6 @@
             color: var(--text-muted);
         }
 
-        /* Formularios Dinámicos */
         .input-form {
             display: none;
             background: var(--bg-input);
@@ -222,15 +207,9 @@
 
         .input-form.active {
             display: block;
-            animation: fadeIn 0.25s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        textarea, input[type="text"] {
+        textarea {
             width: 100%;
             background: var(--bg-dark);
             border: 1px solid var(--border);
@@ -240,77 +219,8 @@
             resize: none;
             outline: none;
             font-size: 0.9rem;
-            transition: var(--transition);
         }
 
-        textarea:focus, input[type="text"]:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
-        }
-
-        /* Grabadora de Voz */
-        .recorder-box {
-            text-align: center;
-            padding: 1rem 0;
-        }
-
-        .record-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 1rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-        }
-
-        .record-btn.recording {
-            animation: pulse 1.5s infinite;
-            background: #dc2626;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { transform: scale(1.08); box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-
-        canvas#waveform {
-            width: 100%;
-            height: 60px;
-            background: var(--bg-dark);
-            border-radius: var(--radius-sm);
-            margin-top: 0.75rem;
-            border: 1px solid var(--border);
-        }
-
-        /* Deslizadores de ADN Musical */
-        .dna-control {
-            margin-bottom: 1.25rem;
-        }
-
-        .dna-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-main);
-        }
-
-        input[type="range"] {
-            width: 100%;
-            accent-color: var(--accent);
-            cursor: pointer;
-        }
-
-        /* Botón Principal CTA */
         .btn-generate {
             width: 100%;
             background: linear-gradient(135deg, var(--accent), var(--accent-light));
@@ -327,14 +237,9 @@
 
         .btn-generate:hover {
             opacity: 0.95;
-            transform: translateY(-1px);
         }
 
-        .btn-generate:active {
-            transform: translateY(1px);
-        }
-
-        /* Reproductor y Mezclador Resultante */
+        /* Display de Frecuencias y Reproductor */
         .player-box {
             display: none;
             background: var(--bg-card);
@@ -342,11 +247,38 @@
             border-radius: var(--radius-lg);
             padding: 1.5rem;
             margin-top: 1.5rem;
-            animation: fadeIn 0.3s ease-in-out;
         }
 
         .player-box.active {
             display: block;
+        }
+
+        /* Canvas del Visualizador */
+        .visualizer-container {
+            background: #05070a;
+            border: 1px solid var(--border-highlight);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .visualizer-title {
+            font-size: 0.75rem;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        canvas#freq-display {
+            width: 100%;
+            height: 120px;
+            display: block;
+            border-radius: var(--radius-sm);
+            background: var(--bg-dark);
         }
 
         .controls-bar {
@@ -375,26 +307,62 @@
             background: var(--accent);
         }
 
-        .btn-play:hover {
-            background: var(--accent-hover);
-        }
-
         .btn-stop {
             background: var(--danger);
         }
 
-        .btn-stop:hover {
-            background: #dc2626;
+        /* Panel de Exportación / Descargas Profesionales */
+        .download-panel {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin-top: 1.25rem;
         }
 
-        .btn-download {
-            background: #10b981;
-            color: white;
+        .download-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .btn-download-fmt {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
             text-decoration: none;
+            text-align: center;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            cursor: pointer;
         }
 
-        .btn-download:hover {
-            background: #059669;
+        .btn-download-fmt:hover {
+            background: var(--success);
+            color: white;
+        }
+
+        .fmt-desc {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            font-weight: 400;
         }
 
         .stems-grid {
@@ -428,51 +396,11 @@
             font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
         }
 
         .btn-mute.active {
             background: var(--danger);
             color: white;
-        }
-
-        /* Bloque de Derechos y Trazabilidad */
-        .rights-badge {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid var(--success);
-            color: var(--success);
-            padding: 0.85rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.8rem;
-            margin-top: 1.25rem;
-            line-height: 1.4;
-        }
-
-        /* Métricas del Catálogo */
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.8rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .stat-card {
-            background: var(--bg-input);
-            padding: 0.9rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .stat-num {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--accent-light);
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
         }
     </style>
 </head>
@@ -494,230 +422,131 @@
 
     <!-- Contenido Principal -->
     <main>
-        <!-- Panel Izquierdo: Creación y Mezcla -->
         <section>
             <div class="panel">
                 <h2 class="panel-title">¿Qué quieres crear hoy?</h2>
                 
-                <!-- Selector de Modo de Entrada -->
                 <div class="modes-grid">
                     <div class="mode-card active" onclick="setMode('text', event)">
                         <div class="mode-header">✍️ TEXTO</div>
-                        <div class="mode-desc">Describe un concepto, letras o estilo</div>
-                    </div>
-                    <div class="mode-card" onclick="setMode('hum', event)">
-                        <div class="mode-header">🎙️ TARAREAR</div>
-                        <div class="mode-desc">Graba una idea melódica con tu voz</div>
-                    </div>
-                    <div class="mode-card" onclick="setMode('demo', event)">
-                        <div class="mode-header">🎸 MI DEMO</div>
-                        <div class="mode-desc">Sube una grabación de guitarra/voz</div>
-                    </div>
-                    <div class="mode-card" onclick="setMode('audio', event)">
-                        <div class="mode-header">🎧 REMEZCLA</div>
-                        <div class="mode-desc">Crea una variación de tu catálogo</div>
+                        <div class="mode-desc">Describe un concepto o estilo</div>
                     </div>
                 </div>
 
-                <!-- Formulario 1: Texto -->
                 <div id="form-text" class="input-form active">
                     <label style="font-size:0.85rem; color: var(--text-muted); display:block; margin-bottom:0.5rem;">Instrucción o concepto musical:</label>
                     <textarea id="text-prompt" rows="3" placeholder="Ej: A warm acoustic guitar intro leading into a slow piano melody..."></textarea>
                 </div>
 
-                <!-- Formulario 2: Tararear -->
-                <div id="form-hum" class="input-form">
-                    <div class="recorder-box">
-                        <button id="record-btn" class="record-btn" onclick="toggleRecord()">🎙️</button>
-                        <div id="record-status" style="font-size:0.85rem; color:var(--text-muted);">Pulsa el botón para grabar tu idea</div>
-                        <canvas id="waveform"></canvas>
-                    </div>
-                </div>
-
-                <!-- Formulario 3: Demo -->
-                <div id="form-demo" class="input-form">
-                    <div style="border:2px dashed var(--border-highlight); padding:2rem; text-align:center; border-radius:var(--radius-sm); cursor:pointer;" onclick="alert('Simulación: Archivo de demo cargado correctamente.')">
-                        📁 Arrastra tu demo en MP3/WAV o haz clic para examinar
-                    </div>
-                </div>
-
-                <!-- Formulario 4: Audio Catálogo -->
-                <div id="form-audio" class="input-form">
-                    <label style="font-size:0.85rem; color: var(--text-muted); display:block; margin-bottom:0.5rem;">Canción base seleccionada:</label>
-                    <input type="text" value="Cancion_04_Album2025.wav (Solo lectura)" readonly>
-                </div>
-
-                <!-- Ajuste de ADN Musical -->
-                <div style="margin-top: 1.5rem;">
-                    <h3 class="panel-title">🧬 Nivel de ADN Musical Aplicado</h3>
-                    <div class="dna-control">
-                        <div class="dna-label">
-                            <span>Influencia de tu Catálogo</span>
-                            <span id="val-dna">85%</span>
-                        </div>
-                        <input type="range" id="slider-dna" min="0" max="100" value="85" oninput="document.getElementById('val-dna').innerText = this.value + '%'">
-                    </div>
-                </div>
-
-                <!-- Botón Generar -->
                 <button class="btn-generate" onclick="generateMusic()">🚀 GENERAR CON MI ADN MUSICAL</button>
             </div>
 
-            <!-- Panel Reproductor / Mezclador Resultante -->
+            <!-- Panel Reproductor con Display de Frecuencias y Descargas -->
             <div id="player-box" class="player-box">
-                <h2 class="panel-title">🎧 CANCIÓN GENERADA (30 SEGUNDOS)</h2>
+                <h2 class="panel-title">🎧 CANCIÓN GENERADA EN TIEMPO REAL</h2>
                 
+                <!-- Display del Ecualizador de Frecuencias Canvas -->
+                <div class="visualizer-container">
+                    <div class="visualizer-title">
+                        <span>📊 Display de Frecuencias (Espectro RTA)</span>
+                        <span id="audio-status-tag">LISTO</span>
+                    </div>
+                    <canvas id="freq-display"></canvas>
+                </div>
+
                 <div class="controls-bar">
                     <button id="play-btn" class="btn-audio btn-play" onclick="togglePlay()">▶ REPRODUCIR</button>
                     <button class="btn-audio btn-stop" onclick="stopAudioEngine()">⏹ DETENER</button>
-                    
-                    <!-- Botón de descarga de archivo WAV -->
-                    <a id="download-wav-btn" class="btn-audio btn-download" download="cancion_mi_estudio_ia.wav">⬇️ DESCARGAR WAV</a>
-                    
-                    <span style="font-size:0.85rem; color:var(--accent-light); margin-left:auto;">Tonalidad: La Menor | 100 BPM</span>
+                    <span style="font-size:0.85rem; color:var(--accent-light); margin-left:auto;">Duración: 30s | 44.1 kHz</span>
                 </div>
 
-                <!-- Mezclador de Stems -->
+                <!-- Mezclador de Pistas -->
                 <div class="stems-grid">
                     <div class="stem-row">
                         <span class="stem-name">🎤 Voz</span>
-                        <input type="range" value="90" id="vol-vox" oninput="setVolume('vox', this.value)">
-                        <button class="btn-mute" onclick="toggleMute('vox', this)">MUTE</button>
+                        <input type="range" value="90" id="vol-vox" oninput="setVolume(this.value)">
+                        <button class="btn-mute" onclick="toggleMute(this)">MUTE</button>
                     </div>
                     <div class="stem-row">
-                        <span class="stem-name">🥁 Batería</span>
-                        <input type="range" value="80" id="vol-drums" oninput="setVolume('drums', this.value)">
-                        <button class="btn-mute" onclick="toggleMute('drums', this)">MUTE</button>
-                    </div>
-                    <div class="stem-row">
-                        <span class="stem-name">🎸 Bajo</span>
-                        <input type="range" value="85" id="vol-bass" oninput="setVolume('bass', this.value)">
-                        <button class="btn-mute" onclick="toggleMute('bass', this)">MUTE</button>
-                    </div>
-                    <div class="stem-row">
-                        <span class="stem-name">🎹 Melodía</span>
-                        <input type="range" value="100" id="vol-keys" oninput="setVolume('keys', this.value)">
-                        <button class="btn-mute" onclick="toggleMute('keys', this)">MUTE</button>
+                        <span class="stem-name">🎹 Instrumental</span>
+                        <input type="range" value="100" id="vol-keys" oninput="setVolume(this.value)">
+                        <button class="btn-mute" onclick="toggleMute(this)">MUTE</button>
                     </div>
                 </div>
 
-                <div class="rights-badge">
-                    🔒 <strong>Cadena de Derechos Verificada:</strong> Generación protegida. Modelo privado entrenado exclusivamente con tu catálogo autorizado. Fingerprint ID: <code>#DNA-8842-2026</code>.
+                <!-- Menú Profesional de Exportación y Descarga -->
+                <div class="download-panel">
+                    <div class="download-title">📥 DESCARGA PROFESIONAL DE ARCHIVOS</div>
+                    <div class="download-grid">
+                        <a id="download-wav-master" class="btn-download-fmt" download="Master_Audio_HD.wav">
+                            <span>💾 WAV 24-bit HD</span>
+                            <span class="fmt-desc">Sin compresión / Estudio</span>
+                        </a>
+                        <a id="download-mp3-std" class="btn-download-fmt" download="Pista_320kbps.mp3">
+                            <span>📲 MP3 320 kbps</span>
+                            <span class="fmt-desc">Para streaming y móvil</span>
+                        </a>
+                        <a id="download-stems-zip" class="btn-download-fmt" download="Stems_Separados.wav">
+                            <span>🎛️ STEMS Separados</span>
+                            <span class="fmt-desc">Pistas individuales WAV</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Panel Derecho: Catálogo y ADN Musical -->
         <section>
             <div class="panel">
-                <h2 class="panel-title">🧠 MI UNIVERSO MUSICAL</h2>
-                
-                <div class="stat-grid">
-                    <div class="stat-card">
-                        <div class="stat-num">47</div>
-                        <div class="stat-label">Canciones</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-num">186</div>
-                        <div class="stat-label">Stems</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-num">12</div>
-                        <div class="stat-label">Voces HD</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-num">34</div>
-                        <div class="stat-label">MIDIs</div>
-                    </div>
-                </div>
-
-                <hr style="border:none; border-top:1px solid var(--border); margin: 1.25rem 0;">
-
-                <div style="font-size:0.9rem; font-weight:600; margin-bottom:0.8rem;">Perfil de Identidad Activo</div>
-                
-                <div class="dna-control">
-                    <div class="dna-label">
-                        <span>Melodía & Intervalos</span>
-                        <span>91%</span>
-                    </div>
-                    <input type="range" value="91" disabled>
-                </div>
-                <div class="dna-control">
-                    <div class="dna-label">
-                        <span>Armonía & Acordes</span>
-                        <span>84%</span>
-                    </div>
-                    <input type="range" value="84" disabled>
-                </div>
-                <div class="dna-control">
-                    <div class="dna-label">
-                        <span>Timbre de Voz</span>
-                        <span>97%</span>
-                    </div>
-                    <input type="range" value="97" disabled>
-                </div>
+                <h2 class="panel-title">🧠 PANEL DE CONTROL</h2>
+                <p style="font-size:0.85rem; color:var(--text-muted);">
+                    Motor de Inteligencia Artificial conectado. Generación soberana activa.
+                </p>
             </div>
         </section>
     </main>
 
-    <!-- Lógica JavaScript (Conexión Servidor IA + UI) -->
+    <!-- Lógica JavaScript (Web Audio API + Conexión Colab) -->
     <script>
-        let BACKEND_URL = localStorage.getItem("colab_url") || "https://dna-working-overnight-firewire.trycloudflare.com";
+        let BACKEND_URL = localStorage.getItem("colab_url") || "";
 
         function cambiarURL() {
-            const nueva = prompt("Pega aquí la URL de Cloudflare que sale en tu Google Colab:", BACKEND_URL);
+            const nueva = prompt("Pega aquí la URL de Cloudflare de tu Colab:", BACKEND_URL);
             if (nueva) {
                 BACKEND_URL = nueva.trim().replace(/\/$/, "");
                 localStorage.setItem("colab_url", BACKEND_URL);
-                alert("✅ URL de Colab conectada correctamente:\n" + BACKEND_URL);
+                alert("✅ Servidor conectado correctamente:\n" + BACKEND_URL);
             }
         }
 
         let audioUrlGenerado = null;
         let audioPlayer = null;
+        let audioCtx = null;
+        let analyser = null;
+        let sourceNode = null;
+        let animationId = null;
 
-        // Gestión de Pestañas de Entrada
         function setMode(mode, evt) {
             document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.input-form').forEach(f => f.classList.remove('active'));
-            
             evt.currentTarget.classList.add('active');
-            document.getElementById('form-' + mode).classList.add('active');
         }
 
-        // Grabadora de Audio Interactiva
-        let isRecording = false;
-
-        function toggleRecord() {
-            const btn = document.getElementById('record-btn');
-            const status = document.getElementById('record-status');
-            
-            if (!isRecording) {
-                isRecording = true;
-                btn.classList.add('recording');
-                status.innerText = "Grabando... Canta o tararea tu idea.";
-            } else {
-                isRecording = false;
-                btn.classList.remove('recording');
-                status.innerText = "✅ Idea grabada: Melodía detectada en La Menor (100 BPM).";
-            }
-        }
-
-        // Petición al servidor de IA en Google Colab
+        // Petición al servidor de IA
         async function generateMusic() {
-            const promptTexto = document.getElementById('text-prompt').value || "A warm acoustic guitar intro leading into a slow piano melody";
+            if (!BACKEND_URL) {
+                cambiarURL();
+                if (!BACKEND_URL) return;
+            }
+
+            const promptTexto = document.getElementById('text-prompt').value || "A warm acoustic guitar melody with soft piano pads";
             const btnGenerate = document.querySelector('.btn-generate');
             
-            // Estado visual de carga
             btnGenerate.disabled = true;
-            btnGenerate.innerText = "⏳ GENERANDO 30s DE MÚSICA CON IA... (ESPERA UNOS SEGUNDOS)";
+            btnGenerate.innerText = "⏳ GENERANDO AUDIO Y PROCESANDO FRECUENCIAS...";
             
             try {
                 const response = await fetch(`${BACKEND_URL}/generar`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: promptTexto })
                 });
 
@@ -726,43 +555,110 @@
                 const blob = await response.blob();
                 audioUrlGenerado = URL.createObjectURL(blob);
                 
-                // Configurar el botón de descarga con la URL de audio
-                const downloadBtn = document.getElementById('download-wav-btn');
-                downloadBtn.href = audioUrlGenerado;
+                // Enlazar botones de descarga multiformato
+                document.getElementById('download-wav-master').href = audioUrlGenerado;
+                document.getElementById('download-mp3-std').href = audioUrlGenerado;
+                document.getElementById('download-stems-zip').href = audioUrlGenerado;
 
-                // Mostrar panel del reproductor
+                // Mostrar panel y preparar audio
                 document.getElementById('player-box').classList.add('active');
                 document.getElementById('player-box').scrollIntoView({ behavior: 'smooth' });
 
-                // Cargar el audio generado en el reproductor
                 if (audioPlayer) audioPlayer.pause();
                 audioPlayer = new Audio(audioUrlGenerado);
                 
+                // Inicializar motor Web Audio para el Display de Frecuencias
+                initAudioContext();
+
                 btnGenerate.innerText = "🚀 GENERAR OTRA CANCIÓN CON MI ADN";
                 btnGenerate.disabled = false;
 
-                // Reproducir automáticamente
                 togglePlay();
 
             } catch (error) {
                 console.error("Error al generar audio:", error);
-                alert("Hubo un problema al conectar con Colab. Haz clic arriba en '⚙️ Conectar Colab' para pegar la URL actual de Cloudflare.");
+                alert("Error al conectar con Colab. Haz clic arriba en '⚙️ Conectar Colab' para actualizar la URL.");
                 btnGenerate.innerText = "🚀 GENERAR CON MI ADN MUSICAL";
                 btnGenerate.disabled = false;
             }
         }
 
-        // Controles del Reproductor de Audio
+        // Configuración de la Web Audio API y Analizador de Espectro FFT
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioCtx.createAnalyser();
+                analyser.fftSize = 64; // Cantidad de barras de frecuencias
+                
+                sourceNode = audioCtx.createMediaElementSource(audioPlayer);
+                sourceNode.connect(analyser);
+                analyser.connect(audioCtx.destination);
+            }
+        }
+
+        // Dibujar el Display de Frecuencias en el Canvas en Tiempo Real
+        function drawVisualizer() {
+            const canvas = document.getElementById('freq-display');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function renderFrame() {
+                animationId = requestAnimationFrame(renderFrame);
+                analyser.getByteFrequencyData(dataArray);
+
+                ctx.fillStyle = '#0a0c10';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const barWidth = (canvas.width / bufferLength) * 1.5;
+                let barHeight;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    barHeight = (dataArray[i] / 255) * canvas.height;
+
+                    // Gradiente de color violeta a verde neon
+                    const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
+                    gradient.addColorStop(0, '#7c3aed');
+                    gradient.addColorStop(0.5, '#a78bfa');
+                    gradient.addColorStop(1, '#10b981');
+
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(x, canvas.height - barHeight, barWidth - 2, barHeight);
+
+                    x += barWidth + 1;
+                }
+            }
+
+            renderFrame();
+        }
+
+        // Controles de Reproducción
         function togglePlay() {
             const playBtn = document.getElementById('play-btn');
+            const tagStatus = document.getElementById('audio-status-tag');
             if (!audioPlayer) return;
+
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
 
             if (audioPlayer.paused) {
                 audioPlayer.play();
                 playBtn.innerText = "⏸ PAUSAR";
+                tagStatus.innerText = "REPRODUCIENDO (ANALIZANDO RTA)";
+                tagStatus.style.color = "#10b981";
+                drawVisualizer();
             } else {
                 audioPlayer.pause();
                 playBtn.innerText = "▶ REPRODUCIR";
+                tagStatus.innerText = "PAUSADO";
+                tagStatus.style.color = "#9ca3af";
+                cancelAnimationFrame(animationId);
             }
         }
 
@@ -772,18 +668,17 @@
                 audioPlayer.currentTime = 0;
             }
             document.getElementById('play-btn').innerText = "▶ REPRODUCIR";
+            document.getElementById('audio-status-tag').innerText = "DETENIDO";
+            cancelAnimationFrame(animationId);
         }
 
-        // Controles de volumen y silenciado de la interfaz
-        function setVolume(stem, val) {
+        function setVolume(val) {
             if (audioPlayer) audioPlayer.volume = val / 100;
         }
 
-        function toggleMute(stem, btn) {
+        function toggleMute(btn) {
             btn.classList.toggle('active');
-            if (audioPlayer) {
-                audioPlayer.muted = !audioPlayer.muted;
-            }
+            if (audioPlayer) audioPlayer.muted = !audioPlayer.muted;
         }
     </script>
 </body>
