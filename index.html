@@ -529,7 +529,7 @@
 
             <!-- Panel Reproductor / Mezclador Resultante -->
             <div id="player-box" class="player-box">
-                <h2 class="panel-title">🎧 CANCIÓN GENERADA</h2>
+                <h2 class="panel-title">🎧 CANCIÓN GENERADA (30 SEGUNDOS)</h2>
                 
                 <div class="controls-bar">
                     <button id="play-btn" class="btn-audio btn-play" onclick="togglePlay()">▶ REPRODUCIR</button>
@@ -622,7 +622,7 @@
 
     <!-- Lógica JavaScript (Conexión Servidor IA + UI) -->
     <script>
-        const BACKEND_URL = "https://circulation-claims-flyer-synthetic.trycloudflare.com";
+        const BACKEND_URL = "https://purse-photography-ecological-removable.trycloudflare.com";
         let audioUrlGenerado = null;
         let audioPlayer = null;
 
@@ -660,7 +660,7 @@
             
             // Estado visual de carga
             btnGenerate.disabled = true;
-            btnGenerate.innerText = "⏳ GENERANDO MÚSICA CON IA... (ESPERA UNOS SEGUNDOS)";
+            btnGenerate.innerText = "⏳ GENERANDO 30s DE MÚSICA Y SEPARANDO PISTAS... (ESPERA UN MOMENTO)";
             
             try {
                 const response = await fetch(`${BACKEND_URL}/generar`, {
