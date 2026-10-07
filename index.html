@@ -78,6 +78,29 @@
             letter-spacing: -0.025em;
         }
 
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-config {
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--text-main);
+            padding: 0.45rem 0.9rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-config:hover {
+            background: var(--accent);
+            color: white;
+        }
+
         .user-badge {
             background: rgba(124, 58, 237, 0.12);
             border: 1px solid var(--accent);
@@ -311,7 +334,7 @@
             transform: translateY(1px);
         }
 
-        /* Reproductor y Mezclador Multipista */
+        /* Reproductor y Mezclador Resultante */
         .player-box {
             display: none;
             background: var(--bg-card);
@@ -451,8 +474,11 @@
             <span class="logo-icon">🎵</span>
             <h1 class="logo-title">MI ESTUDIO IA</h1>
         </div>
-        <div class="user-badge">
-            <span class="status-dot"></span> ARTISTA AUTORIZADO
+        <div class="header-actions">
+            <button class="btn-config" onclick="cambiarURL()">⚙️ Conectar Colab</button>
+            <div class="user-badge">
+                <span class="status-dot"></span> ARTISTA AUTORIZADO
+            </div>
         </div>
     </header>
 
@@ -486,7 +512,7 @@
                 <!-- Formulario 1: Texto -->
                 <div id="form-text" class="input-form active">
                     <label style="font-size:0.85rem; color: var(--text-muted); display:block; margin-bottom:0.5rem;">Instrucción o concepto musical:</label>
-                    <textarea id="text-prompt" rows="3" placeholder="Ej: Una producción íntima y nocturna con guitarra acústica, voz cercana y ambiente melancólico..."></textarea>
+                    <textarea id="text-prompt" rows="3" placeholder="Ej: A warm acoustic guitar intro leading into a slow piano melody..."></textarea>
                 </div>
 
                 <!-- Formulario 2: Tararear -->
@@ -622,7 +648,18 @@
 
     <!-- Lógica JavaScript (Conexión Servidor IA + UI) -->
     <script>
-        const BACKEND_URL = "https://dna-working-overnight-firewire.trycloudflare.com";
+        // Cargar URL almacenada o usar valor por defecto
+        let BACKEND_URL = localStorage.getItem("colab_url") || "https://dna-working-overnight-firewire.trycloudflare.com";
+
+        function cambiarURL() {
+            const nueva = prompt("Pega aquí la URL de Cloudflare que sale en tu Google Colab:", BACKEND_URL);
+            if (nueva) {
+                BACKEND_URL = nueva.trim().replace(/\/$/, "");
+                localStorage.setItem("colab_url", BACKEND_URL);
+                alert("✅ URL de Colab conectada correctamente:\n" + BACKEND_URL);
+            }
+        }
+
         let audioUrlGenerado = null;
         let audioPlayer = null;
 
@@ -655,12 +692,12 @@
 
         // Petición al servidor de IA en Google Colab
         async function generateMusic() {
-            const promptTexto = document.getElementById('text-prompt').value || "A melancholic acoustic guitar with gentle piano pads";
+            const promptTexto = document.getElementById('text-prompt').value || "A warm acoustic guitar intro leading into a slow piano melody";
             const btnGenerate = document.querySelector('.btn-generate');
             
             // Estado visual de carga
             btnGenerate.disabled = true;
-            btnGenerate.innerText = "⏳ GENERANDO 30s DE MÚSICA Y SEPARANDO PISTAS... (ESPERA UN MOMENTO)";
+            btnGenerate.innerText = "⏳ GENERANDO 30s DE MÚSICA CON IA... (ESPERA UNOS SEGUNDOS)";
             
             try {
                 const response = await fetch(`${BACKEND_URL}/generar`, {
@@ -692,7 +729,7 @@
 
             } catch (error) {
                 console.error("Error al generar audio:", error);
-                alert("Hubo un problema al conectar con el servidor de IA. Revisa que Google Colab siga ejecutando la celda.");
+                alert("Hubo un problema al conectar con Colab. Haz clic arriba en '⚙️ Conectar Colab' para pegar la URL actual de Cloudflare.");
                 btnGenerate.innerText = "🚀 GENERAR CON MI ADN MUSICAL";
                 btnGenerate.disabled = false;
             }
