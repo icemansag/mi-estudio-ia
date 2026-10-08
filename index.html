@@ -3,682 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mi Estudio IA - Plataforma de producción musical privada y soberana basada en Music DNA">
-    <title>Mi Estudio IA — Music DNA Studio</title>
-    
-    <!-- Estilos CSS3 Profesionales -->
+    <title>Mi Estudio IA - Enkmina2</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0a0c10;
-            --bg-card: #121621;
-            --bg-card-hover: #1a2030;
-            --bg-input: #0b0d13;
-            --accent: #7c3aed;
-            --accent-hover: #6d28d9;
-            --accent-light: #a78bfa;
-            --accent-glow: rgba(124, 58, 237, 0.35);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --border: #23293e;
-            --border-highlight: #3b4466;
-            --success: #10b981;
-            --danger: #ef4444;
-            --radius-lg: 16px;
-            --radius-md: 10px;
-            --radius-sm: 6px;
-            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --accent-color: #2f81f7;
+            --accent-hover: #58a6ff;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --danger: #f85149;
+            --success: #2ea043;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-color);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            line-height: 1.5;
+            align-items: center;
+            padding: 2rem 1rem;
         }
 
-        /* Encabezado */
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
         header {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
         }
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo-icon {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .logo-title {
-            font-size: 1.25rem;
+        h1 {
+            font-size: 1.5rem;
             font-weight: 700;
-            letter-spacing: -0.025em;
+            color: #ffffff;
         }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-config {
-            background: rgba(124, 58, 237, 0.2);
-            border: 1px solid var(--accent);
-            color: var(--text-main);
-            padding: 0.45rem 0.9rem;
-            border-radius: var(--radius-sm);
+        .status-badge {
             font-size: 0.85rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background-color: var(--border-color);
+            color: var(--text-muted);
             font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
         }
 
-        .btn-config:hover {
-            background: var(--accent);
-            color: white;
+        .status-badge.connected {
+            background-color: rgba(46, 160, 67, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(46, 160, 67, 0.4);
         }
 
-        .user-badge {
-            background: rgba(124, 58, 237, 0.12);
-            border: 1px solid var(--accent);
-            padding: 0.4rem 0.9rem;
-            border-radius: 9999px;
-            font-size: 0.825rem;
-            font-weight: 600;
-            color: var(--accent-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--success);
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 8px var(--success);
-        }
-
-        /* Layout Principal */
-        main {
-            flex: 1;
-            max-width: 1280px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 2.2fr 1fr;
-            gap: 2rem;
-        }
-
-        @media (max-width: 960px) {
-            main {
-                grid-template-columns: 1fr;
-                padding: 1rem;
-            }
-        }
-
-        /* Paneles */
-        .panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .panel-title {
+        .card h2 {
             font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .input-group {
             display: flex;
-            align-items: center;
             gap: 0.5rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
             color: var(--text-main);
-        }
-
-        /* Modos */
-        .modes-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .mode-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .mode-card.active {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .mode-header {
-            font-weight: 600;
             font-size: 0.95rem;
-            margin-bottom: 0.3rem;
+            outline: none;
+            transition: border-color 0.2s;
         }
 
-        .mode-desc {
-            font-size: 0.8rem;
+        input[type="text"]:focus {
+            border-color: var(--accent-color);
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background-color: var(--border-color);
             color: var(--text-muted);
-        }
-
-        .input-form {
-            display: none;
-            background: var(--bg-input);
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
-            border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-        }
-
-        .input-form.active {
-            display: block;
+            cursor: not-allowed;
         }
 
         textarea {
             width: 100%;
-            background: var(--bg-dark);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 0.85rem;
-            border-radius: var(--radius-sm);
-            resize: none;
-            outline: none;
-            font-size: 0.9rem;
-        }
-
-        .btn-generate {
-            width: 100%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: white;
-            border: none;
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            font-size: 1.05rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 20px var(--accent-glow);
-        }
-
-        .btn-generate:hover {
-            opacity: 0.95;
-        }
-
-        /* Display de Frecuencias y Reproductor */
-        .player-box {
-            display: none;
-            background: var(--bg-card);
-            border: 1px solid var(--accent);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .player-box.active {
-            display: block;
-        }
-
-        /* Canvas del Visualizador */
-        .visualizer-container {
-            background: #05070a;
-            border: 1px solid var(--border-highlight);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            margin-bottom: 1.25rem;
-            position: relative;
-        }
-
-        .visualizer-title {
-            font-size: 0.75rem;
-            color: var(--accent-light);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        canvas#freq-display {
-            width: 100%;
-            height: 120px;
-            display: block;
-            border-radius: var(--radius-sm);
-            background: var(--bg-dark);
-        }
-
-        .controls-bar {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin-bottom: 1.25rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-audio {
-            border: none;
-            padding: 0.65rem 1.25rem;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.875rem;
-            color: white;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .btn-play {
-            background: var(--accent);
-        }
-
-        .btn-stop {
-            background: var(--danger);
-        }
-
-        /* Panel de Exportación / Descargas Profesionales */
-        .download-panel {
-            background: var(--bg-input);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
-            margin-top: 1.25rem;
-        }
-
-        .download-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .download-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 0.8rem;
-        }
-
-        .btn-download-fmt {
-            background: rgba(16, 185, 129, 0.12);
-            border: 1px solid var(--success);
-            color: var(--success);
-            padding: 0.75rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: none;
-            text-align: center;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.2rem;
-            cursor: pointer;
-        }
-
-        .btn-download-fmt:hover {
-            background: var(--success);
-            color: white;
-        }
-
-        .fmt-desc {
-            font-size: 0.7rem;
-            opacity: 0.8;
-            font-weight: 400;
-        }
-
-        .stems-grid {
-            display: grid;
-            gap: 0.8rem;
-            margin: 1.25rem 0;
-        }
-
-        .stem-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: var(--bg-input);
+            height: 100px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             padding: 0.75rem 1rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            resize: vertical;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
         }
 
-        .stem-name {
-            width: 90px;
-            font-size: 0.85rem;
-            font-weight: 600;
+        textarea:focus {
+            border-color: var(--accent-color);
         }
 
-        .btn-mute {
-            background: var(--border);
-            border: none;
+        .btn-full {
+            width: 100%;
+            padding: 0.9rem;
+            font-size: 1rem;
+        }
+
+        .player-container {
+            text-align: center;
+            display: none;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 1rem;
+            outline: none;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 0.75rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader p {
             color: var(--text-muted);
-            padding: 0.4rem 0.75rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-mute.active {
-            background: var(--danger);
-            color: white;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Encabezado -->
-    <header>
-        <div class="logo-area">
-            <span class="logo-icon">🎵</span>
-            <h1 class="logo-title">MI ESTUDIO IA</h1>
-        </div>
-        <div class="header-actions">
-            <button class="btn-config" onclick="cambiarURL()">⚙️ Conectar Colab</button>
-            <div class="user-badge">
-                <span class="status-dot"></span> ARTISTA AUTORIZADO
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🎵 Mi Estudio IA</h1>
+            <div id="connectionStatus" class="status-badge">Desconectado</div>
+        </header>
+
+        <!-- Panel de Conexión Colab -->
+        <div class="card">
+            <h2>⚙️ Conectar Colab</h2>
+            <div class="input-group">
+                <input type="text" id="colabUrl" placeholder="Pega aquí tu URL https://xxxx.loca.lt">
+                <button onclick="conectarColab()">Conectar</button>
             </div>
         </div>
-    </header>
 
-    <!-- Contenido Principal -->
-    <main>
-        <section>
-            <div class="panel">
-                <h2 class="panel-title">¿Qué quieres crear hoy?</h2>
-                
-                <div class="modes-grid">
-                    <div class="mode-card active" onclick="setMode('text', event)">
-                        <div class="mode-header">✍️ TEXTO</div>
-                        <div class="mode-desc">Describe un concepto o estilo</div>
-                    </div>
-                </div>
+        <!-- Panel de Generación -->
+        <div class="card">
+            <h2>✨ Generar Canción</h2>
+            <textarea id="promptInput" placeholder="Escribe tu prompt musical aquí (ej. Warm acoustic guitar and soft ambient piano, peaceful melody, 80 bpm)..."></textarea>
+            <button id="btnGenerar" class="btn-full" onclick="generarMusica()" disabled>Generar Audio</button>
 
-                <div id="form-text" class="input-form active">
-                    <label style="font-size:0.85rem; color: var(--text-muted); display:block; margin-bottom:0.5rem;">Instrucción o concepto musical:</label>
-                    <textarea id="text-prompt" rows="3" placeholder="Ej: A simple acoustic guitar intro leading into a slow piano melody..."></textarea>
-                </div>
-
-                <button class="btn-generate" onclick="generateMusic()">🚀 GENERAR CON MI ADN MUSICAL</button>
+            <!-- Cargando -->
+            <div id="loader" class="loader">
+                <div class="spinner"></div>
+                <p>La IA está componiendo tu música en la GPU... (esto puede tardar unos segundos)</p>
             </div>
+        </div>
 
-            <!-- Panel Reproductor con Display de Frecuencias y Descargas -->
-            <div id="player-box" class="player-box">
-                <h2 class="panel-title">🎧 CANCIÓN GENERADA (2 MINUTOS COMPLETOS)</h2>
-                
-                <!-- Display del Ecualizador de Frecuencias Canvas -->
-                <div class="visualizer-container">
-                    <div class="visualizer-title">
-                        <span>📊 Display de Frecuencias (Espectro RTA)</span>
-                        <span id="audio-status-tag">LISTO</span>
-                    </div>
-                    <canvas id="freq-display"></canvas>
-                </div>
+        <!-- Reproductor de Audio -->
+        <div id="playerCard" class="card player-container">
+            <h2>🎧 Resultado</h2>
+            <audio id="audioPlayer" controls></audio>
+            <a id="downloadBtn" style="display:inline-block; margin-top:1rem; color:var(--accent-color); text-decoration:none; font-weight:600;" download="cancion_ia.wav">📥 Descargar archivo WAV</a>
+        </div>
+    </div>
 
-                <div class="controls-bar">
-                    <button id="play-btn" class="btn-audio btn-play" onclick="togglePlay()">▶ REPRODUCIR</button>
-                    <button class="btn-audio btn-stop" onclick="stopAudioEngine()">⏹ DETENER</button>
-                    <span style="font-size:0.85rem; color:var(--accent-light); margin-left:auto;">Duración: 120s (2 min) | 44.1 kHz</span>
-                </div>
-
-                <!-- Mezclador de Pistas -->
-                <div class="stems-grid">
-                    <div class="stem-row">
-                        <span class="stem-name">🎤 Voz</span>
-                        <input type="range" value="90" id="vol-vox" oninput="setVolume(this.value)">
-                        <button class="btn-mute" onclick="toggleMute(this)">MUTE</button>
-                    </div>
-                    <div class="stem-row">
-                        <span class="stem-name">🎹 Instrumental</span>
-                        <input type="range" value="100" id="vol-keys" oninput="setVolume(this.value)">
-                        <button class="btn-mute" onclick="toggleMute(this)">MUTE</button>
-                    </div>
-                </div>
-
-                <!-- Menú Profesional de Exportación y Descarga -->
-                <div class="download-panel">
-                    <div class="download-title">📥 DESCARGA PROFESIONAL DE ARCHIVOS</div>
-                    <div class="download-grid">
-                        <a id="download-wav-master" class="btn-download-fmt" download="Master_Audio_2min_HD.wav">
-                            <span>💾 WAV 24-bit HD</span>
-                            <span class="fmt-desc">Sin compresión / 2 Minutos</span>
-                        </a>
-                        <a id="download-mp3-std" class="btn-download-fmt" download="Pista_2min_320kbps.mp3">
-                            <span>📲 MP3 320 kbps</span>
-                            <span class="fmt-desc">Para streaming y móvil</span>
-                        </a>
-                        <a id="download-stems-zip" class="btn-download-fmt" download="Stems_Separados.wav">
-                            <span>🎛️ STEMS Separados</span>
-                            <span class="fmt-desc">Pistas individuales WAV</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="panel">
-                <h2 class="panel-title">🧠 PANEL DE CONTROL</h2>
-                <p style="font-size:0.85rem; color:var(--text-muted);">
-                    Motor de Inteligencia Artificial conectado. Generación soberana activa (Duración: 2 min).
-                </p>
-            </div>
-        </section>
-    </main>
-
-    <!-- Lógica JavaScript (Web Audio API + Conexión Colab) -->
     <script>
-        let BACKEND_URL = localStorage.getItem("colab_url") || "";
+        let BASE_URL = "";
 
-        function cambiarURL() {
-            const nueva = prompt("Pega aquí la URL de Cloudflare de tu Colab:", BACKEND_URL);
-            if (nueva) {
-                BACKEND_URL = nueva.trim().replace(/\/$/, "");
-                localStorage.setItem("colab_url", BACKEND_URL);
-                alert("✅ Servidor conectado correctamente:\n" + BACKEND_URL);
-            }
-        }
+        function conectarColab() {
+            const urlInput = document.getElementById("colabUrl").value.trim();
+            const statusBadge = document.getElementById("connectionStatus");
+            const btnGenerar = document.getElementById("btnGenerar");
 
-        let audioUrlGenerado = null;
-        let audioPlayer = null;
-        let audioCtx = null;
-        let analyser = null;
-        let sourceNode = null;
-        let animationId = null;
-
-        function setMode(mode, evt) {
-            document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
-            evt.currentTarget.classList.add('active');
-        }
-
-        // Petición al servidor de IA
-        async function generateMusic() {
-            if (!BACKEND_URL) {
-                cambiarURL();
-                if (!BACKEND_URL) return;
+            if (!urlInput.startsWith("http")) {
+                alert("Por favor, introduce una URL válida de LocalTunnel.");
+                return;
             }
 
-            const promptTexto = document.getElementById('text-prompt').value || "A simple acoustic guitar intro leading into a slow piano melody";
-            const btnGenerate = document.querySelector('.btn-generate');
-            
-            btnGenerate.disabled = true;
-            btnGenerate.innerText = "⏳ GENERANDO 2 MINUTOS (120s) DE MÚSICA EN LA GPU...";
-            
+            // Quitar la barra diagonal final si la tiene
+            BASE_URL = urlInput.replace(/\/$/, "");
+
+            // Comprobar conexión con el servidor
+            fetch(`${BASE_URL}/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "ok") {
+                        statusBadge.textContent = "Conectado";
+                        statusBadge.classList.add("connected");
+                        btnGenerar.disabled = false;
+                        alert("¡Conexión establecida con Google Colab con éxito!");
+                    } else {
+                        alert("El servidor respondió pero con un estado inesperado.");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Error al conectar con la URL. Asegúrate de que Colab está corriendo la celda del servidor.");
+                });
+        }
+
+        async function generarMusica() {
+            const promptText = document.getElementById("promptInput").value.trim();
+            const loader = document.getElementById("loader");
+            const btnGenerar = document.getElementById("btnGenerar");
+            const playerCard = document.getElementById("playerCard");
+            const audioPlayer = document.getElementById("audioPlayer");
+            const downloadBtn = document.getElementById("downloadBtn");
+
+            if (!promptText) {
+                alert("Por favor, escribe un prompt antes de generar.");
+                return;
+            }
+
+            if (!BASE_URL) {
+                alert("Primero debes conectar la URL de Colab.");
+                return;
+            }
+
+            // UI Estado Carga
+            loader.style.display = "block";
+            btnGenerar.disabled = true;
+            playerCard.style.display = "none";
+
             try {
-                const response = await fetch(`${BACKEND_URL}/generar`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: promptTexto })
+                const response = await fetch(`${BASE_URL}/generar`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ prompt: promptText })
                 });
 
-                if (!response.ok) throw new Error("Error en el servidor de IA");
+                if (!response.ok) {
+                    throw new Error("Error en el servidor al generar el audio.");
+                }
 
+                // Recibir el archivo de audio WAV en formato Blob
                 const blob = await response.blob();
-                audioUrlGenerado = URL.createObjectURL(blob);
-                
-                // Enlazar botones de descarga multiformato
-                document.getElementById('download-wav-master').href = audioUrlGenerado;
-                document.getElementById('download-mp3-std').href = audioUrlGenerado;
-                document.getElementById('download-stems-zip').href = audioUrlGenerado;
+                const audioUrl = URL.createObjectURL(blob);
 
-                // Mostrar panel y preparar audio
-                document.getElementById('player-box').classList.add('active');
-                document.getElementById('player-box').scrollIntoView({ behavior: 'smooth' });
-
-                if (audioPlayer) audioPlayer.pause();
-                audioPlayer = new Audio(audioUrlGenerado);
-                
-                // Inicializar motor Web Audio para el Display de Frecuencias
-                initAudioContext();
-
-                btnGenerate.innerText = "🚀 GENERAR OTRA CANCIÓN (2 MIN)";
-                btnGenerate.disabled = false;
-
-                togglePlay();
+                // Configurar reproductor
+                audioPlayer.src = audioUrl;
+                downloadBtn.href = audioUrl;
+                playerCard.style.display = "block";
+                audioPlayer.play();
 
             } catch (error) {
-                console.error("Error al generar audio:", error);
-                alert("Error al conectar con Colab. Haz clic arriba en '⚙️ Conectar Colab' para actualizar la URL.");
-                btnGenerate.innerText = "🚀 GENERAR CON MI ADN MUSICAL";
-                btnGenerate.disabled = false;
+                console.error(error);
+                alert("Hubo un error durante la generación. Revisa la consola de Colab.");
+            } finally {
+                loader.style.display = "none";
+                btnGenerar.disabled = false;
             }
-        }
-
-        // Configuración de la Web Audio API y Analizador de Espectro FFT
-        function initAudioContext() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                analyser = audioCtx.createAnalyser();
-                analyser.fftSize = 64; // Cantidad de barras de frecuencias
-                
-                sourceNode = audioCtx.createMediaElementSource(audioPlayer);
-                sourceNode.connect(analyser);
-                analyser.connect(audioCtx.destination);
-            }
-        }
-
-        // Dibujar el Display de Frecuencias en el Canvas en Tiempo Real
-        function drawVisualizer() {
-            const canvas = document.getElementById('freq-display');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = canvas.clientWidth;
-            canvas.height = canvas.clientHeight;
-
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-
-            function renderFrame() {
-                animationId = requestAnimationFrame(renderFrame);
-                analyser.getByteFrequencyData(dataArray);
-
-                ctx.fillStyle = '#0a0c10';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                const barWidth = (canvas.width / bufferLength) * 1.5;
-                let barHeight;
-                let x = 0;
-
-                for (let i = 0; i < bufferLength; i++) {
-                    barHeight = (dataArray[i] / 255) * canvas.height;
-
-                    // Gradiente de color violeta a verde neon
-                    const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
-                    gradient.addColorStop(0, '#7c3aed');
-                    gradient.addColorStop(0.5, '#a78bfa');
-                    gradient.addColorStop(1, '#10b981');
-
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(x, canvas.height - barHeight, barWidth - 2, barHeight);
-
-                    x += barWidth + 1;
-                }
-            }
-
-            renderFrame();
-        }
-
-        // Controles de Reproducción
-        function togglePlay() {
-            const playBtn = document.getElementById('play-btn');
-            const tagStatus = document.getElementById('audio-status-tag');
-            if (!audioPlayer) return;
-
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                playBtn.innerText = "⏸ PAUSAR";
-                tagStatus.innerText = "REPRODUCIENDO (2 MINUTOS)";
-                tagStatus.style.color = "#10b981";
-                drawVisualizer();
-            } else {
-                audioPlayer.pause();
-                playBtn.innerText = "▶ REPRODUCIR";
-                tagStatus.innerText = "PAUSADO";
-                tagStatus.style.color = "#9ca3af";
-                cancelAnimationFrame(animationId);
-            }
-        }
-
-        function stopAudioEngine() {
-            if (audioPlayer) {
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0;
-            }
-            document.getElementById('play-btn').innerText = "▶ REPRODUCIR";
-            document.getElementById('audio-status-tag').innerText = "DETENIDO";
-            cancelAnimationFrame(animationId);
-        }
-
-        function setVolume(val) {
-            if (audioPlayer) audioPlayer.volume = val / 100;
-        }
-
-        function toggleMute(btn) {
-            btn.classList.toggle('active');
-            if (audioPlayer) audioPlayer.muted = !audioPlayer.muted;
         }
     </script>
 </body>
